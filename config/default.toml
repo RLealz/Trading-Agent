@@ -23,6 +23,7 @@ escalation_cooldown_s = 300
 max_escalations_per_hour = 6
 tier1_ttl_blocks = 15
 holding_blocks = 30
+allow_short = true           # set false on spot venues
 
 [sizing]
 kelly_multiplier = 0.25      # fractional Kelly; hard-capped at 0.25 in code regardless

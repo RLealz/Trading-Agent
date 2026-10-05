@@ -77,7 +77,7 @@ def test_fires_and_sizes_in_code(cfg, decision_factory):
 
 def test_model_cannot_loosen_risk_state(cfg, decision_factory):
     loop = build(cfg, FixedReflex(decision_factory(risk_state=RiskState.SAFE)))
-    loop.portfolio.day_start_equity = cfg.starting_equity * 1.03  # already at daily loss limit
+    loop.portfolio.day_start_equity = cfg.starting_equity * 1.04  # 4/104 = 3.8% loss: past the 3% daily limit
     loop.run(SyntheticFeed(list(cfg.symbols), cfg.block_ms, seed=1, n_blocks=40))
     recs = loop.journal.read_all()
     assert all(r["final_risk_state"] == "reduce" for r in recs)
