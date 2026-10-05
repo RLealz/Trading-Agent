@@ -1,0 +1,12 @@
+[Unit]
+Description=Trading agent nightly review (Brier, recalibration, schema promotion)
+
+[Service]
+Type=oneshot
+User=agent
+WorkingDirectory=/opt/trading-agent
+EnvironmentFile=-/etc/trading-agent/env
+ExecStart=/opt/trading-agent/.venv/bin/trading-agent --config config/default.toml review
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/opt/trading-agent/state

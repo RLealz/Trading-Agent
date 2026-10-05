@@ -1,0 +1,10 @@
+[Unit]
+Description=Run the nightly review after each UTC session closes
+
+[Timer]
+# label horizon is 30 one-minute blocks: wait for the session tail to be labelable
+OnCalendar=*-*-* 00:45:00 UTC
+Persistent=true
+
+[Install]
+WantedBy=timers.target

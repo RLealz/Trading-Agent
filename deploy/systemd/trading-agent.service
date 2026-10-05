@@ -1,0 +1,23 @@
+[Unit]
+Description=Trading agent live loop (paper on live data by default)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=agent
+WorkingDirectory=/opt/trading-agent
+EnvironmentFile=-/etc/trading-agent/env
+# Paper on live public data. Switch to `live --exchange <venue>` only after
+# docs/WHERE_THIS_BREAKS.md open "blocks live" items are closed and capital is approved.
+ExecStart=/opt/trading-agent/.venv/bin/trading-agent --config config/default.toml paper --live-data binance
+Restart=on-failure
+RestartSec=10
+# SIGTERM -> loop stops cleanly; persisted portfolio keeps the drawdown clock across restarts
+KillSignal=SIGTERM
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/opt/trading-agent/state
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,7 +1,7 @@
 from types import SimpleNamespace
 
 import anthropic
-import httpx
+import httpx2 as httpx
 
 from trading_agent.deliberation import ClaudeDeliberator
 from trading_agent.schema import Direction
