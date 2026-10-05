@@ -1,0 +1,50 @@
+# Hard limits live here. Nightly review never writes to this file.
+mode = "paper"               # paper | live  (live requires state/capital.json)
+state_dir = "state"
+symbols = ["BTC/USDT", "ETH/USDT"]
+block_ms = 60000             # one candle
+starting_equity = 100000.0
+
+[risk]
+max_drawdown = 0.15          # from peak equity; trips kill switch
+max_daily_loss = 0.03        # from session-start equity; no new risk for the day
+max_position_frac = 0.25     # per-symbol notional / equity
+max_gross_frac = 0.50        # total notional / equity
+near_limit_ratio = 0.80      # fraction of a limit at which state becomes near_limit
+max_snapshot_age_ms = 5000
+max_orders_per_minute = 20
+min_order_notional = 10.0
+
+[policy]
+min_setup_quality = 2
+fire_confidence = 0.80
+escalate_confidence = 0.60
+escalation_cooldown_s = 300
+max_escalations_per_hour = 6
+tier1_ttl_blocks = 15
+holding_blocks = 30
+
+[sizing]
+kelly_multiplier = 0.25      # fractional Kelly; hard-capped at 0.25 in code regardless
+default_payoff_ratio = 1.0   # estimate, refit from the tape by review
+
+[observation]
+short_window = 5
+long_window = 30
+depth_levels = 5
+max_tokens = 400
+
+[execution]
+fee_bps = 5.0
+slippage_bps = 2.0
+
+[tier1]
+model = "claude-opus-5-5"
+effort = "high"
+timeout_s = 600
+
+[review]
+label_horizon_blocks = 30
+history_days = 14
+min_samples = 200
+oos_fraction = 0.3
